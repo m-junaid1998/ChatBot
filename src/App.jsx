@@ -1,21 +1,11 @@
-// import React from "react";
-// import Dashboard from "./pages/Dashboard";
-
-// function App() {
-//   return (
-//     <div>
-//       <Dashboard />
-//     </div>
-//   );
-// }
-
-// export default App;
 import { BrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
+import { ToastContainer } from "react-toastify";
 import { persistor, store } from "./redux/store";
 import ThemeWrapper from "./components/ThemeWrapper";
-import MainRouter from "./router";
+import MainRouter from "./router/index";
+import "./assets/css/style.css";
 
 function App() {
   return (
@@ -24,6 +14,7 @@ function App() {
         <ThemeWrapper>
           <BrowserRouter>
             <MainRouter />
+            <ToastContainer />
           </BrowserRouter>
         </ThemeWrapper>
       </PersistGate>
