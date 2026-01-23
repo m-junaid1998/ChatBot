@@ -1,0 +1,119 @@
+/* ===============================
+ LARGE SCREENS (Desktop ≥1200px)
+================================ */
+@media (min-width: 1200px) {
+  .user-name p {
+    font-size: var(--font-size-12px);
+  }
+
+  .user-name span {
+    font-size: var(--font-size-10px);
+  }
+}
+
+/* ===============================
+ TABLET (768px – 1199px)
+================================ */
+@media (max-width: 1199px) {
+  .header-user {
+    padding: 6px 10px;
+    gap: 6px;
+  }
+  .header-tabs {
+    padding: 6px;
+  }
+  .tab-btn {
+    padding: 8px;
+  }
+  .user-avatar {
+    width: 36px;
+    height: 36px;
+  }
+
+  .user-name p {
+    font-size: 11px;
+  }
+
+  .user-name span {
+    font-size: 10px;
+  }
+}
+
+/* ===============================
+ MOBILE (≤767px)
+================================ */
+@media (max-width: 767px) {
+  .header-user {
+    padding: 6px 8px;
+    gap: 4px;
+  }
+  .header-tabs {
+    padding: 6px;
+  }
+  .tab-btn {
+    padding: 8px;
+  }
+  .user-avatar {
+    width: 34px;
+    height: 34px;
+    font-size: 12px;
+  }
+
+  .user-name p {
+    font-size: 11px;
+  }
+
+  .user-name span {
+    font-size: 9px;
+  }
+  .bulk-heading {
+    font-size: 18px;
+  }
+
+  .bulkupload-dotted {
+    min-height: 180px;
+  }
+
+  .drag-text {
+    font-size: 14px;
+  }
+}
+
+/* ===============================
+ SMALL MOBILE (≤480px)
+================================ */
+@media (max-width: 480px) {
+
+
+  .header-user {
+    padding: 6px;
+  }
+
+  .header-tabs {
+    padding: 6px;
+  }
+  .tab-btn {
+    padding: 8px;
+  }
+
+  .user-name p {
+    font-size: var(--font-size-12px);
+  }
+  .category-row {
+    flex-wrap: wrap;
+    flex-direction: column;
+  }
+
+  .category-row input,
+  .category-row button {
+    width: 100%;
+  }
+
+  .dotted-border p {
+    font-size: 11px;
+  }
+
+  .bulk-container {
+    padding: 10px;
+  }
+}

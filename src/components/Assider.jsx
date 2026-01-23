@@ -9,8 +9,10 @@ import FolderIcon from "../assets/icons/folder.svg";
 
 import ArrowLeft from "../assets/icons/leftarrow.svg";
 import ArrowRight from "../assets/icons/rightarrow.svg";
+import { useNavigate } from "react-router-dom";
 
 function Assider({ collapsed, setCollapsed }) {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const theme = useSelector((state) => state.theme.theme);
   const isDark = theme === "dark";
@@ -18,10 +20,15 @@ function Assider({ collapsed, setCollapsed }) {
   const [activeTab, setActiveTab] = useState("grid");
 
   const tabs = [
-    { key: "dashboard", icon: Dashoard, label: "Dashboard" },
-    { key: "grid", icon: GridIcon, label: "Grid View" },
-    { key: "folder", icon: FolderIcon, label: "Folders" },
+    { key: "dashboard", icon: Dashoard, label: "Dashboard", path: "/" },
+    { key: "grid", icon: GridIcon, label: "Grid View", path: "/documettable" },
+    { key: "folder", icon: FolderIcon, label: "Folders", path: "/folders" },
   ];
+
+  const handleTabClick = (tab) => {
+    setActiveTab(tab.key);
+    navigate(tab.path);
+  };
 
   return (
     <aside className="assider">
@@ -29,13 +36,12 @@ function Assider({ collapsed, setCollapsed }) {
         <button
           className={`theme-toggle-button ${isDark ? "dark" : "light"}`}
           onClick={() => dispatch(toggleTheme())}
-          aria-label="Toggle theme"
         >
-          <div className={`icon-wrapper ${isDark ? "active" : ""}`}>
-            <img src={Light} alt="Light mode" className="light-mode" />
-          </div>
           <div className={`icon-wrapper ${!isDark ? "active" : ""}`}>
-            <img src={Dark} alt="Dark mode" className="dark-mode" />
+            <img src={Light} alt="Light mode" />
+          </div>
+          <div className={`icon-wrapper ${isDark ? "active" : ""}`}>
+            <img src={Dark} alt="Dark mode" />
           </div>
         </button>
       </div>
@@ -48,7 +54,7 @@ function Assider({ collapsed, setCollapsed }) {
               className={`nav-tabs-button ${
                 activeTab === tab.key ? "active" : ""
               }`}
-              onClick={() => setActiveTab(tab.key)}
+              onClick={() => handleTabClick(tab)}
             >
               <img src={tab.icon} alt={tab.label} className="tab-icon-img" />
               {!collapsed && <span className="tab-label">{tab.label}</span>}

@@ -6,6 +6,7 @@ import { persistor, store } from "./redux/store";
 import ThemeWrapper from "./components/ThemeWrapper";
 import MainRouter from "./router/index";
 import "./assets/css/style.css";
+import "./assets/css/mediaquery.css";
 
 function App() {
   return (

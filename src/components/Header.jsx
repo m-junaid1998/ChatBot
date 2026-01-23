@@ -1,11 +1,13 @@
+
+
 import React, { useState } from "react";
-import { Tabs, Tab } from "react-bootstrap";
 import Search from "../assets/icons/search.svg";
 import Notification from "../assets/icons/notification.svg";
 import User from "../assets/icons/user.svg";
 
 function Header() {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [activeTab, setActiveTab] = useState("overview");
 
   const tabs = [
     { key: "overview", label: "Overview" },
@@ -17,51 +19,56 @@ function Header() {
   ];
 
   return (
-    <header className="header row">
-      <div className="col-md-2 col-4">
-        <div className="header-logo">
-          <span className="logo-circle"></span>
-          <span className="logo-text">Knowledge Base</span>
-        </div>
+    <header className="header">
+      {/* LOGO */}
+      <div className="header-logo">
+        <span className="logo-circle"></span>
+        <h5 >Knowledge Base</h5>
       </div>
 
-      <div className={`${isSearchOpen ? "col-md-5 col-7" : "col-md-5"}`}>
-        <Tabs defaultActiveKey="overview" className="header-tabs">
-          {tabs.map((tab) => (
-            <Tab key={tab.key} eventKey={tab.key} title={tab.label} />
-          ))}
-        </Tabs>
+      {/* TABS */}
+      <div className="header-tabs">
+        {tabs.map((tab) => (
+          <button
+            key={tab.key}
+            className={`tab-btn ${activeTab === tab.key ? "active" : ""}`}
+            onClick={() => setActiveTab(tab.key)}
+          >
+            {tab.label}
+          </button>
+        ))}
       </div>
-      <div className={isSearchOpen ? "col-md-3 col-6" : "col-md-1"}>
-        <div className="header-actions">
-          <div className={`search-box ${isSearchOpen ? "open" : ""}`}>
-            <img
-              src={Search}
-              alt="Search"
-              onClick={() => setIsSearchOpen(true)}
+
+      {/* ACTIONS */}
+      <div className="header-actions">
+        <div className={`search-box ${isSearchOpen ? "open" : ""}`}>
+          <img
+            src={Search}
+            alt="Search"
+            className="search-icon"
+            onClick={() => setIsSearchOpen(true)}
+          />
+          {isSearchOpen && (
+            <input
+              type="text"
+              placeholder="Search..."
+              autoFocus
+              onBlur={() => setIsSearchOpen(false)}
             />
-            {isSearchOpen && (
-              <input
-                type="text"
-                placeholder="Search..."
-                autoFocus
-                onBlur={() => setIsSearchOpen(false)}
-              />
-            )}
-          </div>
-          <div className="header-notification">
-            <img src={Notification} alt="Notification" />
-            <span>8</span>
-          </div>
-          <img src={User} alt="User" />
+          )}
         </div>
+
+        <div className="header-notification">
+          <img src={Notification} alt="Notification" className="notification-icon" />
+          <span>8</span>
+        </div>
+
+        <img src={User} alt="User" className="user-icon" />
       </div>
 
-      <div
-        className={`header-user ${isSearchOpen ? "col-md-2 col-6" : "col-md-2"}`}
-      >
+      {/* USER */}
+      <div className="header-user">
         <div className="user-avatar">AA</div>
-
         <div className="user-name">
           <p>Amjad Ali</p>
           <span>amjadali82@gmail.com</span>

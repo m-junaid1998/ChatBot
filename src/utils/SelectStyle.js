@@ -1,4 +1,11 @@
 export const customSelectStyles = {
+  container: (base) => ({
+    ...base,
+    display: "flex",
+    justifyContent: "space-between", 
+    alignItems: "center",
+    width: "100%",
+  }),
   control: (base) => ({
     ...base,
     border: "none",
@@ -6,12 +13,16 @@ export const customSelectStyles = {
     padding: "0px",
     minHeight: "auto",
     backgroundColor: "transparent",
+    display: "flex", 
+    flexWrap: "nowrap",
+    width: "100%",
   }),
-
   valueContainer: (base) => ({
     ...base,
     padding: "0px",
+    flex: "1", 
   }),
+
 
   indicatorsContainer: (base) => ({
     ...base,
@@ -22,13 +33,12 @@ export const customSelectStyles = {
     color: "#999",
     fontSize: "12px",
     fontWeight: "400",
-    padding: "0px",
+  
   }),
   dropdownIndicator: (base) => ({
     ...base,
-    padding: "0px",
     transform: "scale(1.0)",
-    marginTop: "-4px",
+    paddingLeft: "12px",
   }),
 
   indicatorSeparator: () => ({
