@@ -323,7 +323,6 @@ import Jpg from "../assets/icons/jpg.svg";
 import PowerPoint from "../assets/icons/power-point.svg";
 import Excel from "../assets/icons/excel.svg";
 import "../assets/css/pagination.css";
-import "../assets/css/table.css";
 import "react-day-picker/style.css";
 
 const TableView = ({
@@ -483,7 +482,7 @@ const SkeletonRow = () => (
                         <td key={data?.id}>
                           <div className="doc-type-cell">
                             {icon && (
-                              <img src={icon} alt="" className="doc-icon" />
+                              <img src={icon} alt="icons" className="doc-icon" />
                             )}
                             <span>{value}</span>
                           </div>
@@ -495,19 +494,19 @@ const SkeletonRow = () => (
 
                   <td className="table-actions">
                     <button onClick={() => handleView(item)} title="View">
-                      <img src={Eye} alt="" />
+                      <img src={Eye} alt="Eyeicon"  className="Eyeicon" />
                     </button>
                     {DownloadButton && (
                       <button
                         onClick={() => handleDownload(item)}
                         title="Download"
                       >
-                        <img src={DownloadIcon} alt="" />
+                        <img src={DownloadIcon} alt="Downloadicon"  className="Downloadicon"/>
                       </button>
                     )}
                     {deleteButton && (
                       <button onClick={() => handleDelete(item)} title="Delete">
-                        <img src={Delete} alt="" />
+                        <img src={Delete} alt="Deleteicon" className="Deleteicon" />
                       </button>
                     )}
                   </td>
