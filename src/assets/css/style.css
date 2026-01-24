@@ -232,6 +232,11 @@ body {
   width: 100%;
 }
 
+.cross-icon{
+width: 16px;
+height: 16px;
+}
+
 /* NOTIFICATION */
 .header-notification {
   position: relative;
@@ -750,6 +755,9 @@ body {
   border: 2px solid var(--bg);
   color: white;
 }
+.select-file-btn:hover {
+  opacity: 0.8;
+}
 
 .category-row {
   display: flex;
@@ -793,6 +801,7 @@ body {
   color: var(--white);
 }
 
+/* REACT SELECT  */
 .inputs-container {
   border: 2px solid var(--bg);
   border-radius: 12px;
@@ -875,6 +884,10 @@ body {
   border: 2px solid var(--bg);
   color: white;
 }
+.documentview-row button:hover {
+  opacity: 0.8;
+}
+
 
 
 /* =========================
