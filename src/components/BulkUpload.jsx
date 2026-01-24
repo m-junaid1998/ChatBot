@@ -119,14 +119,16 @@ function BulkUpload() {
 
       <div className="Type-Category">
         <p>Type Category</p>
-      <div className="inputs-container">
-        <Select
-          options={documentTypeOptions}
-          isSearchable={true}
-          styles={customSelectStyles}
-          placeholder="Select "
-        />
-      </div>
+        <div className="inputs-container">
+          <Select
+            options={documentTypeOptions}
+            isSearchable={true}
+            styles={customSelectStyles}
+            placeholder="Select Category Type"
+            menuPlacement="auto"
+            menuPosition="fixed"
+          />
+        </div>
       </div>
 
       {/* Hidden Input */}
