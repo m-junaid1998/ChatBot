@@ -534,11 +534,11 @@ body {
   width: 23px;
   height: 23px;
   background-color: var(--card);
-  border-radius: 50%;
+  border-radius: 40%;
   display: flex;
   justify-content: center;
   align-items: center;
-border: 2px solid var(--hover);
+   border: 2px solid var(--hover);
   cursor: pointer;
   z-index: 10;
 }
@@ -876,6 +876,54 @@ border: 2px solid var(--hover);
   color: white;
 }
 
+
+/* =========================
+   PAGE NOT FOUND 
+========================= */
+.pagenotfound {
+  display: flex;
+  flex-direction: column;
+  justify-content: center; 
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+  position: fixed; 
+  top: 0;
+  left: 0;
+  z-index: 999; 
+  overflow: hidden !important; 
+  background-color: var(--bg);
+}
+
+.pagenotfound img {
+  width: 100%;
+  max-width: 250px; 
+  height: auto; 
+  object-fit: contain;
+}
+
+.pagenotfound h2 {
+  font-size: 24px;
+  font-weight: 600;
+  margin-top: 24px;
+  color: var(--text);
+}
+
+.pagenotfound-btn {
+  padding: 12px 30px;
+  font-size: 14px;
+  font-weight: 500;
+  border-radius: 8px;
+  background-color: var(--primary);
+  border: none;
+  color: white;
+  cursor: pointer;
+  transition: opacity 0.3s ease;
+}
+
+.pagenotfound-btn:hover {
+  opacity: 0.6;
+}
 
 /* =========================
   TABLE AND SEARCH 
