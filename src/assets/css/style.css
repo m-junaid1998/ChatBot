@@ -6,6 +6,8 @@
   --white: #e2e2e2;
   --primary: #009591;
   --scroll-bar: #4e4a4a;
+   --Azure-Blue: #008fd5;
+  --Blue-Gray: #9ea8b8;
   --notification-badge: #ff3b30;
   --font-size-10px: 0.625em;
   --font-size-12px: 0.75em;
@@ -14,7 +16,7 @@
   --font-size-18px: 1.125em;
   --font-size-20px: 1.25em;
   --font-size-26px: 1.625em;
-  --icon-filter: brightness(0)   ;
+  --icon-filter: brightness(0);
 }
 
 * {
@@ -46,6 +48,7 @@ body {
   --hover: #1e293b;
   --scroll-bar: #d1d1d1;
   --icon-filter: brightness(0) invert(1);
+  --action-icon: brightness(0) invert(1);
 }
 /* ===============================
    LAYOUT STRUCTURE
@@ -847,7 +850,11 @@ border: 2px solid var(--hover);
   box-shadow: none;
 }
 
-/*  */
+
+
+/* =========================
+  DOCUMENTS
+========================= */
 
 .documentview-row {
   display: flex;
@@ -867,4 +874,197 @@ border: 2px solid var(--hover);
   background-color: var(--primary);
   border: 2px solid var(--bg);
   color: white;
+}
+
+
+/* =========================
+  TABLE AND SEARCH 
+========================= */
+
+.filter-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 0;
+  gap: 10px;
+}
+
+.search-bar-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 1;
+}
+
+.search-bar-span {
+  position: relative;
+  flex: 1;
+  max-width: 400px;
+}
+
+.search-bar-span input {
+  width: 100%;
+  padding: 10px 10px 10px 40px;
+  border: 1px solid var(--Blue-Gray);
+  border-radius: 8px;
+  height: 45px;
+}
+
+.search-bar-span img {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 18px;
+}
+
+/* --- Table Scroll Fix --- */
+.managment-table {
+  border-radius: 12px;
+  border: 1px solid var(--bg);
+  background: var(--card);
+  width: 100%;
+  position: relative;
+}
+
+.table-responsive {
+  display: block;
+  width: 100%;
+  overflow-x: auto; 
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Scrollbar Styling */
+.table-responsive::-webkit-scrollbar {
+  height: 8px;
+}
+.table-responsive::-webkit-scrollbar-thumb {
+  background: var(--scroll-bar);
+  border-radius: 10px;
+}
+
+.managment-table table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 800px; 
+ 
+}
+
+.managment-table th {
+  background: var(--hover);
+  padding: 12px 15px;
+  font-weight: 500;
+  font-size: var(--font-size-14px);
+  
+  color: var(--text);
+  text-align: left;
+  white-space: nowrap;
+}
+
+.managment-table td {
+  padding: 12px 15px;
+  border-bottom: 1px solid var(--hover);
+  color: var(--text);
+  font-size: var(--font-size-14px);
+  vertical-align: middle;
+  white-space: nowrap;
+}
+
+/* --- Document Icons & Status --- */
+.doc-type-cell { display: flex; align-items: center; gap: 8px; }
+.doc-icon { width: 20px; height: 20px; object-fit: contain; }
+
+
+.Eyeicon , .Downloadicon , .Deleteicon {
+  filter: var( --action-icon);
+  transition: filter 0.3s ease;
+  cursor: pointer;
+}
+.table-status {
+  padding: 4px 12px;
+  border-radius: 6px;
+  font-size: var(--font-size-12px);
+  font-weight: 500;
+  display: inline-block;
+  min-width: 90px;
+  text-align: center;
+}
+
+.status-completed { background: #e6fcf5; color: #009591; }
+.status-pending { background: #fff9db; color: #ffab00; }
+.status-inprogress { background: #e7f5ff; color: #00b8d9; }
+
+/* --- Table Actions --- */
+.table-actions {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+}
+.table-actions button {
+  background: none; border: none; cursor: pointer; padding: 4px;
+}
+.table-actions button img { width: 24px; height: 24px; }
+
+/* --- Checkbox --- */
+.checkmark {
+  width: 18px; height: 18px; border: 1px solid var(--Azure-Blue);
+  border-radius: 4px; display: inline-block; position: relative;
+}
+.custom-checkbox input:checked + .checkmark { background: var(--Azure-Blue); }
+.custom-checkbox input:checked + .checkmark::after {
+  content: ""; position: absolute; left: 5px; top: 1px; width: 5px; height: 10px;
+  border: solid white; border-width: 0 2px 2px 0; transform: rotate(45deg);
+}
+.custom-checkbox input { display: none; }
+
+/* --- Skeleton Loading Effect --- */
+.skeleton-row td {
+  padding: 15px;
+}
+
+.skeleton-box {
+  width: 100%;
+  height: 15px;
+  background: #f0f0f0;
+  position: relative;
+  overflow: hidden;
+  border-radius: 4px;
+}
+
+.skeleton-box::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  transform: translateX(-100%);
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0) 0,
+    rgba(255, 255, 255, 0.5) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
+.skeleton-checkbox { width: 18px; height: 18px; }
+.skeleton-text { width: 80%; }
+.skeleton-status { width: 60px; height: 20px; border-radius: 12px; }
+.skeleton-action { width: 25px; height: 25px; border-radius: 50%; display: inline-block; margin-right: 5px; }
+
+
+@media (max-width: 767px) {
+  .filter-row { flex-direction: column; align-items: stretch; }
+  .search-bar-span { max-width: 100%; }
+  .desktop-only { display: none; }
+}
+
+@media (max-width: 480px) {
+  .managment-table td, .managment-table th { padding: 10px; font-size: 13px; }
 }
