@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import Search from "../assets/icons/search.svg";
 import Notification from "../assets/icons/notification.svg";
 import User from "../assets/icons/user.svg";
+import X from "../assets/icons/cross.svg";
 
 function Header() {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
@@ -56,6 +57,7 @@ function Header() {
               onBlur={() => setIsSearchOpen(false)}
             />
           )}
+          <img src={X} alt="X" className="cross-icon" />
         </div>
 
         <div className="header-notification">
