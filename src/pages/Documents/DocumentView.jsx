@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import TableView from "../../components/TableView";
-import { endpoints } from "../../api/config";
-import { useGetQuery, useLazyDocumentPreviewQuery } from "../../api/apiSlice";
 import DeleteModal from "../../components/DeleteModal/DeleteModal";
+import { endpoints } from "../../api/config";
+import { useGetQuery, useLazyBlobRequestQuery } from "../../api/apiSlice";
+import {downloadFileFromBlob} from "../../utils/HelperFunction"
 import { useNavigate } from "react-router-dom";
 
 const tableHead = [
@@ -15,88 +16,6 @@ const tableHead = [
   { id: "time_of_upload", label: "Time of Upload" },
 ];
 
-const dummyDocuments = [
-  {
-    _id: "1",
-    document_name: "Invoice_Jan.pdf",
-    document_type: "PDF",
-    uploaded_by: "Harry",
-    status: "Completed",
-    category: "Finance",
-    date_of_upload: "2026-01-20",
-    time_of_upload: "2026-01-20",
-  },
-  {
-    _id: "2",
-    document_name: "Staff_List.xlsx",
-    document_type: "Excel",
-    uploaded_by: "Amjad",
-    status: "Pending",
-    category: "HR",
-    date_of_upload: "2026-01-21",
-    time_of_upload: "2026-01-20",
-  },
-  {
-    _id: "3",
-    document_name: "Logo_v1.png",
-    document_type: "JPG",
-    uploaded_by: "Harry",
-    status: "In Progress",
-    category: "Marketing",
-    date_of_upload: "2026-01-21",
-    time_of_upload: "2026-01-20",
-  },
-  {
-    _id: "4",
-    document_name: "Contract.docx",
-    document_type: "Word",
-    uploaded_by: "Admin",
-    status: "Completed",
-    category: "Legal",
-    date_of_upload: "2026-01-22",
-    time_of_upload: "2026-01-20",
-  },
-  {
-    _id: "5",
-    document_name: "Briefing.ppt",
-    document_type: "PPT",
-    uploaded_by: "Harry",
-    status: "Completed",
-    category: "Design",
-    date_of_upload: "2026-01-22",
-    time_of_upload: "2026-01-20",
-  },
-  {
-    _id: "6",
-    document_name: "Taxes.pdf",
-    document_type: "PDF",
-    uploaded_by: "Amjad",
-    status: "Pending",
-    category: "Finance",
-    date_of_upload: "2026-01-23",
-    time_of_upload: "2026-01-20",
-  },
-  {
-    _id: "7",
-    document_name: "Survey.csv",
-    document_type: "Excel",
-    uploaded_by: "Admin",
-    status: "Completed",
-    category: "Research",
-    date_of_upload: "2026-01-23",
-    time_of_upload: "2026-01-20",
-  },
-  {
-    _id: "8",
-    document_name: "Plan.doc",
-    document_type: "Word",
-    uploaded_by: "Harry",
-    status: "In Progress",
-    category: "Operations",
-    date_of_upload: "2026-01-24",
-    time_of_upload: "2026-01-20",
-  },
-];
 
 const DocumentView = () => {
   const navigate = useNavigate();
@@ -107,19 +26,34 @@ const DocumentView = () => {
     isLoading,
   } = useGetQuery(endpoints.document.documenttable);
 
-  const tableData =
-    documenttable?.documents?.length > 0
-      ? documenttable.documents
-      : dummyDocuments;
+  const tableData = documenttable?.documents || [];
 
-  const [getPreview] = useLazyDocumentPreviewQuery();
+  const [blobRequest] = useLazyBlobRequestQuery();
+
 
   const handleView = async (item) => {
-    console.log("Viewing:", item.document_name);
+    try {
+      const res = await blobRequest({
+        endpoint: endpoints.document.documentpreview,
+        params: { object_id: item?._id },
+      }).unwrap();
+      const url = URL.createObjectURL(res);
+      window.open(url, "_blank");
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   const handleDownload = async (item) => {
-    console.log("Downloading:", item.document_name);
+    try {
+      const res = await blobRequest({
+        endpoint: endpoints.document.documentdownload,
+        params: { object_id: item?._id },
+      }).unwrap();
+      downloadFileFromBlob(res, item?.document_name);
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   const handleDelete = (item) => {
@@ -135,6 +69,7 @@ const DocumentView = () => {
       <TableView
         tableHead={tableHead}
         tableData={tableData.slice(0, 6)}
+      // isLoading
         deleteButton
         DownloadButton
         handleDownload={handleDownload}

@@ -40,6 +40,7 @@ import Dashboard from "../pages/Dashboard/Dashboard";
 import DocumentTable from "../pages/Documents/DocumentTable";
 import { Route, Routes } from "react-router-dom";
 import PageNotFound from "../components/PageNotFound";
+import ChatArea from "../pages/Chat/ChatArea";
 
 function AppRouting() {
   const [collapsed, setCollapsed] = useState(true);
@@ -52,12 +53,12 @@ function AppRouting() {
           <div className={collapsed ? "sidebar-collapsed" : "sidebar-expanded"}>
             <Assider collapsed={collapsed} setCollapsed={setCollapsed} />
           </div>
-
           <div className="dashboard-col">
             <Routes>
               <Route path="/" element={<Dashboard />} />
               <Route path="/documettable" element={<DocumentTable />} />
-              <Route path="*" element={<PageNotFound/>} />
+              <Route path="/chat" element={<ChatArea />} />
+              <Route path="*" element={<PageNotFound />} />
             </Routes>
           </div>
         </div>

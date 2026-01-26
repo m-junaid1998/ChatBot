@@ -11,7 +11,7 @@ import "./assets/css/mediaquery.css";
 function App() {
   return (
     <Provider store={store}>
-      <PersistGate persistor={persistor}>
+      <PersistGate persistor={persistor} loading={null}>
         <ThemeWrapper>
           <BrowserRouter>
             <MainRouter />

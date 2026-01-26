@@ -21,8 +21,8 @@ function Assider({ collapsed, setCollapsed }) {
 
   const tabs = [
     { key: "dashboard", icon: Dashoard, label: "Dashboard", path: "/" },
-    { key: "grid", icon: GridIcon, label: "Grid View", path: "/documettable" },
-    { key: "folder", icon: FolderIcon, label: "Folders", path: "/folders" },
+    { key: "document", icon: GridIcon, label: "Document View", path: "/documettable" },
+    { key: "chat", icon: FolderIcon, label: "Chats", path: "/chat" },
   ];
 
   const handleTabClick = (tab) => {

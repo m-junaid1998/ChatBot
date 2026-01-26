@@ -21,15 +21,13 @@ export const handleFileDownload = (data, fileName) => {
   XLSX.writeFile(workbook, `${fileName}.xlsx`);
 };
 
-export const downloadFileFromBlob = (blob, fileName) => {
-  if (!blob) return;
-  const url = URL.createObjectURL(blob);
-  const link = document.createElement("a");
-  link.href = url;
-  link.download = fileName || "downloaded_file";
-  document.body.appendChild(link);
-  link.click();
-  document.body.removeChild(link);
-  URL.revokeObjectURL(url);
-  toast.success("File Downloaded Successfully");
-};
+
+export function downloadExcel(attachment) {
+  const linkSource = `data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,${attachment}`;
+  const downloadLink = document.createElement("a");
+  const fileName = `excel.xlsx`;
+
+  downloadLink.href = linkSource;
+  downloadLink.download = fileName;
+  downloadLink.click();
+}

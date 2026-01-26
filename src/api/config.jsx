@@ -2,19 +2,23 @@ export const baseUrl = "http://202.47.59.77:8080";
 export const endpoints = {
   document: {
     documentupload: "/documents/upload",
-    getcategories: "/documents/categories",
-    documenttable: "/documents/table",
+    documentingest: "/documents/ingest",
+    documentcategories: "/documents/categories",
     documentdelete: "/documents/delete",
     documentpreview: "/documents/preview",
     documentdownload: "/documents/download",
-    documentcsv: "/documents/download_csv",
-    documentingest: "/documents/ingest",
+    documenttable: "/documents/table",
   },
+
   upload: {
-    addonecategory: "/upload/one_category",
+    onecategory: "/upload/one_category",
+    bulkcategory: "/upload/bulk_category",
   },
+
   chat: {
-    chatbot: "/chat/response",
     retrieval: "/chat/retrieval",
+    response: "/chat/response",
+    reference: "/chat/reference",
+    audio: "/chat/audio",
   },
 };

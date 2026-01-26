@@ -11,7 +11,7 @@ const PriorApprovalsChart = () => {
     labels: ["PDF", "Docs", "PPT", "jpg"],
     datasets: [
       {
-        data: [48, 23, 12, 17],
+        data: [28, 23, 22, 17],
         backgroundColor: [
           "#08627d", // PDF - Dark Blue
           "#ffad42", // Docs - Orange

@@ -32,9 +32,9 @@
 
 /* Active page button */
 .premium-pagination button.active {
-  background: #0b4a98;
+  background:  #009591;
   color: #fff;
-  border: 1px solid #008fd5;
+  border: 1px solid #919eab52;
 }
 
 /* Previous/Next buttons */

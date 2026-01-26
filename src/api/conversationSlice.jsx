@@ -14,52 +14,47 @@ const conversationSlice = createSlice({
         state.conversations.length > 0
           ? Math.max(...state.conversations.map((c) => c.id)) + 1
           : 1;
+
       state.conversations.unshift({
         id: newId,
         title: "New Chat",
         messages: [],
       });
+
       state.activeConvId = newId;
     },
+
     selectChat: (state, action) => {
       state.activeConvId = action.payload;
     },
+
     addMessage: (state, action) => {
       const { convId, message } = action.payload;
       const conv = state.conversations.find((c) => c.id === convId);
+
       if (conv) {
-        conv.messages.push(message);
-        if (conv.messages.length === 1 && message.role === "user") {
-          conv.title =
-            message.content.slice(0, 30) +
-            (message.content.length > 30 ? "..." : "");
-        }
+        conv.messages.push({
+          role: message.role,
+          content: message.content || "",
+          references: message.references || [],
+        });
       }
     },
+
     updateLastMessage: (state, action) => {
-      const { convId, content } = action.payload;
+      const { convId, content, references } = action.payload;
       const conv = state.conversations.find((c) => c.id === convId);
+
       if (conv && conv.messages.length > 0) {
-        const lastMsgIndex = conv.messages.length - 1;
-        conv.messages[lastMsgIndex].content = content;
-      }
-    },
-    updateConversation: (state, action) => {
-      const { convId, updates } = action.payload;
-      const conv = state.conversations.find((c) => c.id === convId);
-      if (conv) {
-        Object.assign(conv, updates);
+        const lastMsg = conv.messages[conv.messages.length - 1];
+        if (content !== undefined) lastMsg.content = content;
+        if (references) lastMsg.references = references;
       }
     },
   },
 });
 
-export const {
-  createNewChat,
-  selectChat,
-  addMessage,
-  updateLastMessage,
-  updateConversation,
-} = conversationSlice.actions;
+export const { createNewChat, selectChat, addMessage, updateLastMessage } =
+  conversationSlice.actions;
 
 export default conversationSlice.reducer;
