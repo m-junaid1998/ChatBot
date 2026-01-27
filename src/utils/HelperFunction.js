@@ -10,3 +10,28 @@ export const downloadFileFromBlob = (blob, fileName) => {
   URL.revokeObjectURL(url);
   toast.success("File Downloaded Successfully");
 };
+
+
+//  export const getErrorMessage = (error) => {
+//   const serverError = error?.data || error; 
+//   if (serverError?.detail) {
+//     if (Array.isArray(serverError.detail)) {
+//       return serverError.detail[0]?.msg || "Validation error occurred";
+//     }
+//     return serverError.detail;
+//   }
+//   return serverError?.message || "An unexpected error occurred";
+// };
+
+export const getErrorMessage = (error, fallback = "An unexpected error occurred") => {
+  const serverError = error?.data || error?.response?.data || error; 
+  
+  if (serverError?.detail) {
+    if (Array.isArray(serverError.detail)) {
+      return serverError.detail[0]?.msg || fallback;
+    }
+    return serverError.detail;
+  }
+  
+  return serverError?.message || fallback;
+};

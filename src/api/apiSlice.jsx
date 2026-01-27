@@ -114,8 +114,6 @@
 //   useChatPreviewMutation
 // } = apiSlice;
 
-
-
 import { fetchBaseQuery } from "@reduxjs/toolkit/query";
 import { createApi } from "@reduxjs/toolkit/query/react";
 import { dataToQueryParameter } from "./APIHelper";
@@ -165,6 +163,15 @@ export const apiSlice = createApi({
         responseHandler: (res) => res.blob(),
       }),
     }),
+
+    ReferenceRequest: builder.mutation({
+      query: ({ endpoint, body, params }) => ({
+        url: params ? `${endpoint}${dataToQueryParameter(params)}` : endpoint,
+        method: "POST",
+        body: body,
+        responseHandler: (res) => res.blob(),
+      }),
+    }),
   }),
 });
 
@@ -173,4 +180,5 @@ export const {
   useGenericMutation,
   useUploadMutation,
   useLazyBlobRequestQuery,
+  useReferenceRequestMutation
 } = apiSlice;

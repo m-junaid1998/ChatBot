@@ -122,7 +122,10 @@ import TableView from "../../components/TableView";
 import DeleteModal from "../../components/DeleteModal/DeleteModal";
 import { endpoints } from "../../api/config";
 import { useGetQuery, useLazyBlobRequestQuery } from "../../api/apiSlice";
-import { downloadFileFromBlob } from "../../utils/HelperFunction";
+import {
+  downloadFileFromBlob,
+  getErrorMessage,
+} from "../../utils/HelperFunction";
 import { handleFileDownload } from "../../utils/Excel";
 import Breadcrumbs from "../../components/Breadcrumbs";
 import { toast } from "react-toastify";
@@ -173,8 +176,9 @@ const DocumentTable = () => {
       }).unwrap();
       const url = URL.createObjectURL(res);
       window.open(url, "_blank");
-    } catch (e) {
-      toast.error("Failed to View document");
+    } catch (error) {
+      const customMsg = "Fail to Preview Document";
+      toast.error(getErrorMessage(error, customMsg));
     }
   };
 
@@ -186,20 +190,26 @@ const DocumentTable = () => {
       }).unwrap();
       downloadFileFromBlob(res, item?.document_name);
       toast.success("File downloaded successfully");
-    } catch (e) {
-      toast.error("Failed to download document");
+    } catch (error) {
+      const customMsg = "Fail to Download Document";
+      toast.error(getErrorMessage(error, customMsg));
     }
   };
 
   const handleExport = () => {
-    if (!tableData.length) return toast.error("No data to export");
-    handleFileDownload(
-      tableData.map(({ _id, ...rest }) => rest),
-      "Document-List",
-    );
-    toast.success(`${tableData.length} documents exported successfully`);
+    try {
+      if (!tableData || tableData.length === 0) {
+        return toast.warn("No data available to export");
+      }
+      const exportData = tableData.map(({ _id, id, ...rest }) => rest);
+      handleFileDownload(exportData, "Document-List");
+      toast.success(`${tableData.length} documents exported successfully`);
+    } catch (error) {
+      const errorMsg = getErrorMessage(error, "Failed to generate export file");
+      toast.error(errorMsg);
+      console.error("Export Error:", error);
+    }
   };
-
   const handleDelete = (item) => {
     setDeleteTarget(item);
   };

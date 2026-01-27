@@ -149,7 +149,6 @@ import React, { useRef, useState } from "react";
 import FileUploadIcon from "../assets/icons/bulkuploadfile.svg";
 import Pause from "../assets/icons/pause.svg";
 import Delete from "../assets/icons/table-delete-icon.svg";
-
 import Select from "react-select";
 import { customSelectStyles } from "../utils/SelectStyle";
 import { toast } from "react-toastify";
@@ -159,6 +158,7 @@ import {
   useUploadMutation,
 } from "../api/apiSlice";
 import { endpoints } from "../api/config";
+import { getErrorMessage } from "../utils/HelperFunction";
 
 function BulkUpload() {
   const fileInputRef = useRef(null);
@@ -197,7 +197,7 @@ function BulkUpload() {
       setCategoryInput("");
       refetchCategories();
     } catch (error) {
-      toast.error("Failed to add category");
+      toast.error(getErrorMessage(error));
     }
   };
 
@@ -229,7 +229,8 @@ function BulkUpload() {
 
       toast.success("Knowledge Base Ingestion complete!");
     } catch (error) {
-      toast.error("Process failed");
+      const msg = getErrorMessage(error);
+      toast.error(msg);
       setSelectedFile(null);
       setCurrentStep(0);
     }

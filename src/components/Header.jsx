@@ -5,24 +5,31 @@ import Search from "../assets/icons/search.svg";
 import Notification from "../assets/icons/notification.svg";
 import User from "../assets/icons/user.svg";
 import X from "../assets/icons/cross.svg";
+import { useNavigate } from "react-router-dom";
 
 function Header() {
+    const navigate = useNavigate();
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [activeTab, setActiveTab] = useState("overview");
 
   const tabs = [
-    { key: "overview", label: "Overview" },
-    { key: "activity", label: "Activity" },
-    { key: "manage", label: "Manage" },
-    { key: "program", label: "Program" },
-    { key: "account", label: "Account" },
-    { key: "reports", label: "Reports" },
+    { key: "overview", label: "Overview", path: "/" },
+    { key: "activity", label: "Activity", path: "/documettable" },
+    { key: "manage", label: "Manage", path: "/chat"  },
+    { key: "program", label: "Program" , path: "/"  },
+    { key: "account", label: "Account", path: "/documettable" },
+    { key: "reports", label: "Reports", path:  "/chat" },
   ];
+
+    const handleTabClick = (tab) => {
+    setActiveTab(tab.key);
+    navigate(tab.path);
+  };
 
   return (
     <header className="header">
       {/* LOGO */}
-      <div className="header-logo">
+      <div className="header-logo" onClick={() => navigate("/")}>
         <span className="logo-circle"></span>
         <h5 >Knowledge Base</h5>
       </div>
@@ -33,7 +40,7 @@ function Header() {
           <button
             key={tab.key}
             className={`tab-btn ${activeTab === tab.key ? "active" : ""}`}
-            onClick={() => setActiveTab(tab.key)}
+                   onClick={() => handleTabClick(tab)}
           >
             {tab.label}
           </button>

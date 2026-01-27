@@ -3,8 +3,12 @@ import TableView from "../../components/TableView";
 import DeleteModal from "../../components/DeleteModal/DeleteModal";
 import { endpoints } from "../../api/config";
 import { useGetQuery, useLazyBlobRequestQuery } from "../../api/apiSlice";
-import {downloadFileFromBlob} from "../../utils/HelperFunction"
+import {
+  downloadFileFromBlob,
+  getErrorMessage,
+} from "../../utils/HelperFunction";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const tableHead = [
   { id: "document_name", label: "Document Name" },
@@ -15,7 +19,6 @@ const tableHead = [
   { id: "date_of_upload", label: "Date of upload" },
   { id: "time_of_upload", label: "Time of Upload" },
 ];
-
 
 const DocumentView = () => {
   const navigate = useNavigate();
@@ -30,7 +33,6 @@ const DocumentView = () => {
 
   const [blobRequest] = useLazyBlobRequestQuery();
 
-
   const handleView = async (item) => {
     try {
       const res = await blobRequest({
@@ -39,8 +41,9 @@ const DocumentView = () => {
       }).unwrap();
       const url = URL.createObjectURL(res);
       window.open(url, "_blank");
-    } catch (e) {
-      console.log(e);
+    } catch (error) {
+      const customMsg = "Fail to Preview Document";
+      toast.error(getErrorMessage(error, customMsg));
     }
   };
 
@@ -51,8 +54,9 @@ const DocumentView = () => {
         params: { object_id: item?._id },
       }).unwrap();
       downloadFileFromBlob(res, item?.document_name);
-    } catch (e) {
-      console.log(e);
+    } catch (error) {
+       const customMsg = "Fail to Download Document";
+      toast.error(getErrorMessage(error, customMsg));
     }
   };
 
@@ -69,7 +73,7 @@ const DocumentView = () => {
       <TableView
         tableHead={tableHead}
         tableData={tableData.slice(0, 6)}
-      // isLoading
+        // isLoading
         deleteButton
         DownloadButton
         handleDownload={handleDownload}

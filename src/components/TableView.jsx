@@ -7,7 +7,7 @@ import Eye from "../assets/icons/eye.svg";
 import searchIcon from "../assets/icons/header-search.png";
 import calender from "../assets/icons/calender.png";
 import download from "../assets/icons/download-icon.svg";
-import nodata from "../assets/icons/nodatafound.svg";
+import nodata from "../assets/icons/no-data-found.svg";
 import DownloadIcon from "../assets/icons/download.svg";
 import Delete from "../assets/icons/table-delete-icon.svg";
 import PDF from "../assets/icons/pdf.svg";
@@ -125,7 +125,7 @@ const TableView = ({
               <Select
                 options={options}
                 styles={customSelectStyles}
-                placeholder="Select Category"
+                placeholder="Select Document Type"
                 value={selectedCategory}
                 onChange={onChange}
                 isSearchable

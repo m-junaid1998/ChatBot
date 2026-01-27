@@ -11,9 +11,12 @@
   },
   "dependencies": {
     "@reduxjs/toolkit": "^2.11.2",
+    "axios": "^1.13.3",
     "bootstrap": "^5.3.8",
     "chartjs-plugin-datalabels": "^2.2.0",
+    "i": "^0.3.7",
     "moment": "^2.30.1",
+    "npm": "^11.8.0",
     "react": "^19.2.0",
     "react-bootstrap": "^2.10.10",
     "react-chartjs-2": "^5.3.1",

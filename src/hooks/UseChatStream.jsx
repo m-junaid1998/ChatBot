@@ -1,9 +1,16 @@
-import { useRef, useState } from "react";
+import { useRef, useState, useCallback } from "react";
+import axios from "axios";
 import { baseUrl } from "../api/config";
 
 const useChatStream = () => {
   const abortControllerRef = useRef(null);
   const [loading, setLoading] = useState(false);
+
+  const abort = useCallback(() => {
+    if (abortControllerRef.current) {
+      abortControllerRef.current.abort();
+    }
+  }, []);
 
   const streamChat = async ({
     endpoint,
@@ -13,68 +20,86 @@ const useChatStream = () => {
     onError,
   }) => {
     setLoading(true);
-    abortControllerRef.current = new AbortController();
+    abortControllerRef.current = new AbortController();    
     let accumulated = "";
     let finalReferences = [];
     try {
-      const response = await fetch(`${baseUrl}${endpoint}`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
+      const response = await axios({
+        method: 'POST',
+        url: `${baseUrl}${endpoint}`,
+        data,
+        headers: { 
+          "Content-Type": "application/json",
+          "Accept": "text/event-stream" 
+        },
+        responseType: 'stream', 
+        adapter: 'fetch', 
         signal: abortControllerRef.current.signal,
       });
-      if (!response.ok) {
-        const errorData = await response.json().catch(() => ({}));
-        throw new Error(
-          errorData.detail || errorData.message || "Server error",
-        );
-      }
-      const reader = response.body.getReader();
+
+      const reader = response.data.getReader();
       const decoder = new TextDecoder();
       let buffer = "";
+
       while (true) {
         const { done, value } = await reader.read();
         if (done) break;
+
         buffer += decoder.decode(value, { stream: true });
-        const lines = buffer.split("\n");
-        buffer = lines.pop() || "";
-        for (const line of lines) {
-          if (!line.startsWith("data: ")) continue;
-          const jsonStr = line.slice(6).trim();
-          if (!jsonStr) continue;
+    
+        const parts = buffer.split("\n");
+        buffer = parts.pop() || "";
+
+        for (const line of parts) {
+          const trimmedLine = line.trim();
+        
+          if (!trimmedLine || !trimmedLine.startsWith("data:")) continue;
+          const jsonStr = trimmedLine.replace(/^data:\s*/, "");
+          
+          if (jsonStr === "[DONE]") break;
+
           try {
-            const json = JSON.parse(jsonStr); 
+            const json = JSON.parse(jsonStr);
+
             if (json.content) {
               accumulated += json.content;
               onStream?.(accumulated);
-            } 
-            if (json.references?.length) {
-              finalReferences.push(
-                ...json.references.map((ref) => ({
-                  response_line: ref.response_line || "",
-                  document_name: ref.document_name || "Unknown document",
-                  page: Number(ref.page)|| null,
-                   rawPage: ref.page || null, 
-                  score: ref.score || null,
-                })),
-              );
+            }
+
+            if (json.references && Array.isArray(json.references)) {
+              const formattedRefs = json.references.map((ref) => ({
+                response_line: ref.response_line ?? "",
+                document_name: ref.document_name ?? "Unknown document",
+                page: ref.page ?? null,
+                score: ref.score ?? null,
+              }));
+              finalReferences.push(...formattedRefs);
             }
           } catch (err) {
-            console.error("Parse error:", err);
+            console.warn("Skipping partial chunk:", jsonStr);
           }
         }
-      } 
+      }
+
       onComplete?.(finalReferences);
+
     } catch (e) {
-      if (e.name !== "AbortError") onError?.(e.message);
+      if (axios.isCancel(e) || e.name === "AbortError") {
+        console.log("Stream stopped by user");
+      } else {
+        const errorMessage = e.response?.data?.detail || e.message || "FastAPI Stream Error";
+        onError?.(errorMessage);
+      }
     } finally {
       setLoading(false);
     }
   };
+
   return {
     streamChat,
-    abort: () => abortControllerRef.current?.abort(),
+    abort,
     loading,
   };
 };
+
 export default useChatStream;

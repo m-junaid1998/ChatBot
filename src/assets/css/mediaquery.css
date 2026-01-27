@@ -222,6 +222,9 @@
     padding: 4px 10px;
     border-radius: 20px;
   }
+  .source-btns button {
+    padding: 6px 15px; 
+  }
 }
 
 @media (max-width: 576px) {
