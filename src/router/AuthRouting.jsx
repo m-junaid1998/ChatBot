@@ -1,48 +1,42 @@
-import React, { useEffect } from "react";
+import React from "react";
 import LoginBackground from "../assets/icons/login.svg";
-import SignupBackground from "../assets/icons/sign-up.svg";
-import ForgotBackground from "../assets/icons/forgot-password.svg";
-import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
+import SignupBackground from "../assets/icons/login-bg.svg";
+import { Route, Routes, useLocation } from "react-router-dom";
 import Login from "../pages/authPages/Login";
+import Signup from "../pages/authPages/Signup";
 
-import { useSelector } from "react-redux";
-import PageNotFound from "../components/PageNotFound";
+
 
 const AuthRouting = () => {
-  const navigate = useNavigate();
+
   const location = useLocation();
 
-  const { user } = useSelector((state) => state.auth);
   const currentPath = location.pathname;
 
-  useEffect(() => {
-    if (!user) {
-      navigate("/");
-    }
-  }, [user]);
+
 
   const backgroundImages = {
     "/": LoginBackground,
-    "/Signup": SignupBackground,
-    "/ForgotPassword": ForgotBackground,
+    "/signup": SignupBackground,
   };
 
   return (
-    <div className="row login-container-row">
-      <div className="col-md-5 no-padding login-background">
+    <div className="row auth-container-row">
+      <div className="col-md-6 nopadding">
+        <div className=" auth-left-container">
         <Routes>
           <Route exact path="/" element={<Login />} />
-          {/* <Route exact path="/Signup" element={<Signup />} />
-          <Route exact path="/ForgotPassword" element={<ForgotPassword />} /> */}
-          <Route exact path="*" element={<PageNotFound />} />
+          <Route exact path="/signup" element={<Signup />} />
         </Routes>
       </div>
-      <div className="col-md-7 no-padding login-right-box">
-        <div className="login-right-container">
+      </div>
+      <div className="col-md-6 nopadding ">
+        <div className="auth-right-container">
           <img
             src={backgroundImages[currentPath]}
             alt="Background image"
             loading="lazy"
+            className="img-fluid"
           />
         </div>
       </div>

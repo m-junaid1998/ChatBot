@@ -372,4 +372,8 @@
   .chat-input-section button {
     transform: scale(0.9);
   }
+  
+  .auth-right-box {
+    display: none;
+  }
 }
