@@ -4,16 +4,12 @@ import SignupBackground from "../assets/icons/login-bg.svg";
 import { Route, Routes, useLocation } from "react-router-dom";
 import Login from "../pages/authPages/Login";
 import Signup from "../pages/authPages/Signup";
-
-
+import PageNotFound from "../components/PageNotFound";
 
 const AuthRouting = () => {
-
   const location = useLocation();
 
   const currentPath = location.pathname;
-
-
 
   const backgroundImages = {
     "/": LoginBackground,
@@ -21,16 +17,17 @@ const AuthRouting = () => {
   };
 
   return (
-    <div className="row auth-container-row">
-      <div className="col-md-6 nopadding">
+    <div className="row auth-container-row g-0">
+      <div className="col-md-6 ">
         <div className=" auth-left-container">
-        <Routes>
-          <Route exact path="/" element={<Login />} />
-          <Route exact path="/signup" element={<Signup />} />
-        </Routes>
+          <Routes>
+            <Route exact path="/" element={<Login />} />
+            <Route exact path="/signup" element={<Signup />} />
+            <Route exact path="*" element={<PageNotFound />} />
+          </Routes>
+        </div>
       </div>
-      </div>
-      <div className="col-md-6 nopadding ">
+      <div className="col-md-6  ">
         <div className="auth-right-container">
           <img
             src={backgroundImages[currentPath]}
