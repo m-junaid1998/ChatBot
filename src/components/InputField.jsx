@@ -39,7 +39,7 @@ function InputField({
           className={rightIcon ? "" : "input-without-icon"}
           value={value}
           multiple={multiple}
-           onKeyDown={onKeyDown}
+          onKeyDown={onKeyDown}
         />
         {showIcon && (
           <button

@@ -27,6 +27,9 @@
   .messages-viewport {
     padding: 10px 20px;
   }
+  .auth-left-container {
+    padding: 30px 20%;
+  }
 }
 
 /* ===============================
@@ -78,6 +81,12 @@
   }
   .input-wrapper {
     max-width: 90%; 
+  }
+  .auth-left-container {
+    padding: 30px 10%;
+  }
+  .login-heading p, .login-heading span {
+    font-size: 32px;
   }
 }
 
@@ -225,6 +234,24 @@
   .source-btns button {
     padding: 6px 15px; 
   }
+  .auth-container-row {
+    flex-direction: column;
+  }
+  .auth-right-container {
+    display: none; 
+  }
+  .auth-left-container {
+    width: 100%;
+    align-items: center; 
+    text-align: center;
+  }
+  .login-heading {
+    line-height: 35px;
+  }
+  .login-heading p, .login-heading span {
+    font-size: 28px;
+  }
+
 }
 
 @media (max-width: 576px) {
@@ -372,8 +399,80 @@
   .chat-input-section button {
     transform: scale(0.9);
   }
-  
-  .auth-right-box {
-    display: none;
+
+  .custom-input-container {
+    margin-top: 25px;
+    padding: 10px 12px; 
+    border-radius: 10px;
   }
+
+ 
+  .custom-input-container input {
+    font-size: 13px; 
+    padding: 4px 0;
+  }
+
+  .custom-input-container input::placeholder {
+    font-size: 12px;
+    opacity: 0.8;
+  }
+
+  .custom-input-container p {
+    top: -26px; 
+    font-size: 13px;
+    left: 4px;
+  }
+
+  .custom-input-container button {
+    right: 8px;
+  }
+
+  .custom-input-container button img {
+    width: 18px; 
+    height: 18px;
+  }
+
+  .input-without-icon {
+    padding-right: 0px !important;
+  }
+
+  .auth-right-container {
+    display: flex;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    opacity: 0.7; 
+    z-index: 1;
+  }
+  
+  .auth-right-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 0;
+  }
+
+  .auth-left-container {
+    background: transparent;
+    padding: 15px; 
+    z-index: 2;
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .login-container {
+    background: rgba(255, 255, 255, 0.92);
+    padding: 20px;
+    border-radius: 16px;
+    width: 100%;
+    max-width: 380px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  }
+
 }
