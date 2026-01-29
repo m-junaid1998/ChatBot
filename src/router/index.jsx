@@ -4,8 +4,8 @@ import AuthRouting from "./AuthRouting";
 function MainRouter() {
   return (
     <>
-      {/* <AppRouting /> */}
-      <AuthRouting/>
+      <AppRouting />
+      {/* <AuthRouting/> */}
     </>
   );
 }

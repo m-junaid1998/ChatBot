@@ -10,11 +10,7 @@ import download from "../assets/icons/download-icon.svg";
 import nodata from "../assets/icons/no-data-found.svg";
 import DownloadIcon from "../assets/icons/download.svg";
 import Delete from "../assets/icons/table-delete-icon.svg";
-import PDF from "../assets/icons/pdf.svg";
-import Word from "../assets/icons/word.svg";
-import Jpg from "../assets/icons/jpg.svg";
-import PowerPoint from "../assets/icons/power-point.svg";
-import Excel from "../assets/icons/excel.svg";
+import { getDocIcon } from "../utils/HelperFunction";
 import "../assets/css/pagination.css";
 import "react-day-picker/style.css";
 
@@ -40,26 +36,8 @@ const TableView = ({
 }) => {
   const [search, setSearch] = useState("");
   const [open, setOpen] = useState(false);
-
   const anchorRef = useRef(null);
-
-  const getDocIcon = (type) => {
-    if (!type) return null;
-    const lowerType = type.toLowerCase();
-    if (lowerType.includes("pdf")) return PDF;
-    if (lowerType.includes("xls") || lowerType.includes("excel")) return Excel;
-    if (lowerType.includes("doc") || lowerType.includes("word")) return Word;
-    if (
-      lowerType.includes("jpg") ||
-      lowerType.includes("jpeg") ||
-      lowerType.includes("png")
-    )
-      return Jpg;
-    if (lowerType.includes("ppt") || lowerType.includes("power"))
-      return PowerPoint;
-    return null;
-  };
-
+  
   const SkeletonRow = () => (
     <tr className="skeleton-row">
       <td>
